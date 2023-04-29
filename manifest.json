@@ -3,28 +3,29 @@
     "cite": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FEAT#Referencing",
     "command": "python /flywheel/v0/run.py",
     "config": {
-      "task-name": {
-          "description": "One task may be selected for FEAT 1st level analysis. Task name must be consistent with naming used in preprocessing package.",
+      "echo-times": {
+        "optional": true,
+          "description": "Space seperated list of echo times TE: e1 e2 e3.",
           "type": "string"
       },
-      "output-name": {
-          "description": "[NAME].feat directory name. If left blank, output name will be drawn from the fsf template file.",
-          "type": "string"
+      "output-layout": {
+          "default": "legacy",
+          "description": "Organization of outputs (bids|orig)",
+          "type": "string",
+          "enum": [
+            "bids",
+            "orig"
+          ]
       },
-      "motion-confound": {
+      "explicit-mask": {
           "type":"boolean",
           "default": false,
-          "description": "Add 6-DOF head motion parameters as confound regressors."
+          "description": "Use explicit mask computed during fmriprep for analysis."
       },
-      "acompcor-confound": {
-          "type":"boolean",
-          "default": false,
-          "description": "Add aCompCor (6 components) as confound regressors."
-      },
-      "dummy-scans": {
-          "type": "integer",
-          "default": 0,
-          "description": "Add [NUMBER] dummy scan confound regressors to the start of the trial. Used to account for initial signal stabilization. "
+      "command-line-args": {
+        "optional": true,
+        "description": "additional command line arguments outlined in tedana's usage notes",
+        "type": "string"
       },
       "gear-log-level": {
         "default": "INFO",
@@ -39,7 +40,7 @@
       },
       "gear-dry-run": {
           "default": false,
-          "description": "Do everything except actually executing qsiprep",
+          "description": "pretend command ran",
           "type": "boolean"
       },
       "gear-writable-dir": {
@@ -94,34 +95,26 @@
             "fMRI"
           ],
           "components": [
-            "FSL"
+            "python"
           ],
           "modality": [
             "MR"
           ],
-          "suite": "Computational Models (GLM, etc)",
+          "suite": "Denoising",
           "type": [
             "NIFTI"
           ]
         },
         "gear-builder": {
             "category": "analysis",
-            "image": "amhe4269/hcp-fsl-feat:6.0.4_inc0.0rc10"
+            "image": "amhe4269/fw-tedana:0.0.12_inc0.0rc1"
         },
         "license": "Apache-2.0"
     },
-    "description": "UNDER DEVELOPMENT!! (HPC Compatible) FSL's FEAT (FMRI Expert Analysis Tool). As implemented in this Gear, FEAT first level analysis will act on HCP Preporcessing Pipeline outputs. Check out additional gears for using FSL FEAT with other preprocessing pipelines, or standalone. Voxelwise activation analyses for a single task will be generated. A template FSF design file is required, and all processing steps indicated in the design file will be followed.",
+    "description": "UNDER DEVELOPMENT!! (HPC Compatible) TE-dependent analysis (tedana) is a Python library for denoising multi-echo functional magnetic resonance imaging (fMRI) data. Tedana should be used for optimal weighting methods and denoising preprocessed multi-echo fmri data.",
     "environment": {
-        "FSF_OUTPUT_FORMAT": "nii.gz",
-        "FSLDIR": "/opt/fsl-6.0.4",
         "USER": "flywheel",
-        "FSLMULTIFILEQUIT": "TRUE",
-        "FSLOUTPUTTYPE": "NIFTI_GZ",
-        "FSLTCLSH": "/opt/fsl-6.0.4/bin/fsltclsh",
-        "FSLWISH": "/opt/fsl-6.0.4/bin/fslwish",
-        "FSL_PYTHON": "${FSLDIR}/fslpython/envs/fslpython",
-        "LD_LIBRARY_PATH": "/usr/share/fsl/lib:/usr/share/fsl/lib",
-        "PATH": "/opt/poetry/bin:/opt/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/fsl-6.0.4/bin",
+        "PATH": "/opt/poetry/bin:/opt/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
         "REQUESTS_CA_BUNDLE": "/etc/ssl/certs/ca-certificates.crt",
         "python3": "/opt/venv/bin/python3",
         "python": "/opt/venv/bin/python",
@@ -134,41 +127,32 @@
       "api-key": {
           "base": "api-key"
       },
-      "functional_zip": {
-        "description": "Select functional run for ICA",
-        "base": "file",
-        "optional": false
-      },
-      "icafix_functional_zip": {
-        "description": "Select functional run for ICA",
+      "fmriprep_zip": {
+        "description": "(Optional) Pass entire preprocessed session level dataset from fmriprep preprocessing. Tedana will be run on all fmri ME acquisitions.",
         "base": "file",
         "optional": true
       },
-      "structural_zip": {
-        "description": "Select structural zip for the functional data",
+      "fmri_echo_1": {
+        "description": "(Optional) Alternative method to pass preprocessed fmri multi echo separately (one echo per input).",
         "base": "file",
-        "optional": false
-      },
-      "event-files": {
-        "base": "file",
-        "description": "Explanatory variable (EVs) custom text files. Identify in config options the event files type (BIDS-Formatted|FSL-3 Column Format|FSL-1 Entry Per Volume)",
         "optional": true
       },
-      "FSF_TEMPLATE" : {
+      "fmri_echo_2": {
+        "description": "(Optional) Alternative method to pass preprocessed fmri multi echo separately (one echo per input).",
         "base": "file",
-        "description": "FSL DESIGN FILE that will be used as the template for all analyses. Record all common processing decisions in this file, for example slice-timing correction, intensity normization, EV naming and design. ",
-         "type": {
-          "enum": [
-            "text"
-          ]
-        }
+        "optional": true
+      },
+      "fmri_echo_3": {
+        "base": "file",
+        "description": "(Optional) Alternative method to pass preprocessed fmri multi echo separately (one echo per input).",
+        "optional": true
       }
     },
-    "label": "HCP-FSL: FEAT - fMRI preprocessing (v6.0)",
+    "label": "Tedana: TE dependent analysis",
     "license": "MIT",
     "maintainer": "Amy Hegarty <amhe4260@colorado.edu>",
-    "name": "hcp-fsl-feat",
-    "source": "https://github.com/intermountainneuroimaging/hcp-fsl-feat",
-    "url": "http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FEAT",
-    "version": "6.0.4_inc0.0rc9"
+    "name": "tedana",
+    "source": "https://github.com/intermountainneuroimaging/fw-tedana",
+    "url": "https://tedana.readthedocs.io/en/stable/index.html",
+    "version": "0.0.12_inc0.0rc1"
 }

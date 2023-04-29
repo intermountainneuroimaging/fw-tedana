@@ -22,9 +22,8 @@ from flywheel_gear_toolkit.utils.zip_tools import zip_output
 # This design with the main interfaces separated from a gear module (with main and
 # parser) allows the gear module to be publishable, so it can then be imported in
 # another project, which enables chaining multiple gears together.
-from fw_gear_hcp_fsl_feat.main import prepare, run
-from fw_gear_hcp_fsl_feat.parser import parse_config
-from utils.dry_run import pretend_it_ran
+from fw_gear_tedana.main import prepare, run
+from fw_gear_tedana.parser import parse_config
 from utils.zip_htmls import zip_htmls
 
 from utils.singularity import run_in_tmp_dir
@@ -39,7 +38,7 @@ os.chdir("/flywheel/v0")
 
 
 # pylint: disable=too-many-locals,too-many-statements
-def main(context: GearToolkitContext):
+def execute(context: GearToolkitContext):
     FWV0 = Path.cwd()
     log.info("Running gear in %s", FWV0)
     output_dir = context.output_dir
@@ -121,10 +120,10 @@ if __name__ == "__main__":  # pragma: no cover
 
         # # Initialize logging, set logging level based on `debug` configuration
         # # key in gear config.
-        # gear_context.init_logging()
+        gear_context.init_logging()
 
         # Pass the gear context into main function defined above.
-        return_code = main(gear_context)
+        return_code = execute(gear_context)
 
     # clean up (might be necessary when running in a shared computing environment)
     if scratch_dir:

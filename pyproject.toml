@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "fw-gear-bids-qsiprep"
-version = "1.0.3"
-description = "BIDS qsiprep 1.0.1_0.15.4  qsiprep configures pipelines for processing diffusion-weighted MRI (dMRI) data. The main features of this software are: A BIDS-app approach to preprocessing nearly all kinds of modern diffusion MRI data. Automatically generated preprocessing pipelines that correctly group, distortion correct, motion correct, denoise, co-register and resample your scans, producing visual reports and QC metrics. A system for running state-of-the-art reconstruction pipelines that include algorithms from Dipy, MRTrix, DSI Studio and others. A novel motion correction algorithm that works on DSI and random q-space sampling schemes"
+name = "fw-gear-tedana"
+version = "0.0."
+description = "tedana"
 authors = ["Flywheel <support@flywheel.io>"]
 readme = "README.md"
 license = "MIT"
@@ -24,7 +24,11 @@ beautifulsoup4 = "^4.11.1"
 errorhandler = "^2.0.1"
 nibabel = "^5.0.0"
 nipype = "^1.8.5"
-pandas = "^1.5.3"
+nilearn = "^0.10.0"
+mapca = "^0.0.3"
+duecredit = "^0.9.2"
+pandas = "1.4.4"
+tedana = "^0.0.12"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.1.2"
