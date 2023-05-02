@@ -1,26 +1,26 @@
 {
     "author": "Intermountain Neuroimaging Consortium",
-    "cite": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FEAT#Referencing",
+    "cite": "https://tedana.readthedocs.io/en/stable/",
     "command": "python /flywheel/v0/run.py",
     "config": {
       "echo-times": {
         "optional": true,
-          "description": "Space seperated list of echo times TE: e1 e2 e3.",
-          "type": "string"
+        "description": "Space seperated list of echo times TE: e1 e2 e3.",
+        "type": "string"
       },
       "output-layout": {
-          "default": "legacy",
-          "description": "Organization of outputs (bids|orig)",
-          "type": "string",
-          "enum": [
-            "bids",
-            "orig"
-          ]
+        "default": "legacy",
+        "description": "Organization of outputs (bids|legacy)",
+        "type": "string",
+        "enum": [
+          "bids",
+          "legacy"
+        ]
       },
       "explicit-mask": {
-          "type":"boolean",
-          "default": false,
-          "description": "Use explicit mask computed during fmriprep for analysis."
+        "type":"boolean",
+        "default": false,
+        "description": "Use explicit mask computed during fmriprep for analysis."
       },
       "command-line-args": {
         "optional": true,
@@ -39,54 +39,54 @@
         ]
       },
       "gear-dry-run": {
-          "default": false,
-          "description": "pretend command ran",
-          "type": "boolean"
+        "default": false,
+        "description": "pretend command ran",
+        "type": "boolean"
       },
       "gear-writable-dir": {
-          "default": "/pl/active/ics/fw_temp_data",
-          "description": "Gears expect to be able to write temporary files in /flywheel/v0/.  If this location is not writable (such as when running in Singularity), this path will be used instead.  fMRIPrep creates a large number of files so this disk space should be fast and local.",
-          "type": "string"
+        "default": "/pl/active/ics/fw_temp_data",
+        "description": "Gears expect to be able to write temporary files in /flywheel/v0/.  If this location is not writable (such as when running in Singularity), this path will be used instead.  fMRIPrep creates a large number of files so this disk space should be fast and local.",
+        "type": "string"
       },
       "slurm-cpu": {
-          "default": "1",
-          "description": "[SLURM] How many cpu-cores to request per command/task. This is used for the underlying '--cpus-per-task' option. If not running on HPC, then this flag is ignored",
-          "type": "string"
+        "default": "1",
+        "description": "[SLURM] How many cpu-cores to request per command/task. This is used for the underlying '--cpus-per-task' option. If not running on HPC, then this flag is ignored",
+        "type": "string"
       },
       "slurm-ram": {
-          "default": "12G",
-          "description": "[SLURM] How much RAM to request. This is used for the underlying '--mem-per-cpu' option. If not running on HPC, then this flag is ignored",
-          "type": "string"
+        "default": "12G",
+        "description": "[SLURM] How much RAM to request. This is used for the underlying '--mem-per-cpu' option. If not running on HPC, then this flag is ignored",
+        "type": "string"
       },
       "slurm-ntasks": {
-          "default": "1",
-          "description": "[SLURM] Total number of tasks/commands across all nodes (not equivalent to neuroimaging tasks). Using a value greater than 1 for code that has not been parallelized will not improve performance (and may break things).",
-          "type": "string"
+        "default": "1",
+        "description": "[SLURM] Total number of tasks/commands across all nodes (not equivalent to neuroimaging tasks). Using a value greater than 1 for code that has not been parallelized will not improve performance (and may break things).",
+        "type": "string"
       },
       "slurm-nodes": {
-          "default": "1",
-          "description": "[SLURM] How many HPC nodes to run on",
-          "type": "string"
+        "default": "1",
+        "description": "[SLURM] How many HPC nodes to run on",
+        "type": "string"
       },
       "slurm-partition": {
-          "default": "blanca-ics",
-          "description": "[SLURM] Blanca, Alpine, or Summit partitions can be entered",
-          "type": "string"
+        "default": "blanca-ics",
+        "description": "[SLURM] Blanca, Alpine, or Summit partitions can be entered",
+        "type": "string"
       },
       "slurm-qos": {
-          "default": "blanca-ics",
-          "description": "[SLURM] For Blanca the QOS has a different meaning, ie blanca-ics vs blanca-ibg, etc. For Alpine and Summit, the QOS should be set to normal if running a job for 1 day or less, and set to long if running a job with a maximum walltime of 7 days",
-          "type": "string"
+        "default": "blanca-ics",
+        "description": "[SLURM] For Blanca the QOS has a different meaning, ie blanca-ics vs blanca-ibg, etc. For Alpine and Summit, the QOS should be set to normal if running a job for 1 day or less, and set to long if running a job with a maximum walltime of 7 days",
+        "type": "string"
       },
       "slurm-account": {
-          "default": "blanca-ics",
-          "description": "[SLURM] For Blanca the ACCOUNT should be set to the sub-account of choice (e.g. blanca-ics-rray). For Alpine, the account should be set to ucb-general, or the specialized account granted by RC: ucb278_asc1",
-          "type": "string"
+        "default": "blanca-ics",
+        "description": "[SLURM] For Blanca the ACCOUNT should be set to the sub-account of choice (e.g. blanca-ics-rray). For Alpine, the account should be set to ucb-general, or the specialized account granted by RC: ucb278_asc1",
+        "type": "string"
       },
       "slurm-time": {
-          "default": "1428",
-          "description": "[SLURM] Maximum walltime requested after which your job will be cancelled if it hasn't finished. Default to 1 day",
-          "type": "string"
+        "default": "1428",
+        "description": "[SLURM] Maximum walltime requested after which your job will be cancelled if it hasn't finished. Default to 1 day",
+        "type": "string"
       }
     },
     "custom": {
@@ -107,11 +107,11 @@
         },
         "gear-builder": {
             "category": "analysis",
-            "image": "amhe4269/fw-tedana:0.0.12_inc0.1"
+            "image": "amhe4269/fw-tedana:0.0.12_inc0.2"
         },
         "license": "Apache-2.0"
     },
-    "description": "UNDER DEVELOPMENT!! (HPC Compatible) TE-dependent analysis (tedana) is a Python library for denoising multi-echo functional magnetic resonance imaging (fMRI) data. Tedana should be used for optimal weighting methods and denoising preprocessed multi-echo fmri data.",
+    "description": "(HPC Compatible) TE-dependent analysis (tedana) is a Python library for denoising multi-echo functional magnetic resonance imaging (fMRI) data. Tedana should be used for optimal weighting methods and denoising preprocessed multi-echo fmri data.",
     "environment": {
         "USER": "flywheel",
         "PATH": "/opt/poetry/bin:/opt/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
@@ -151,8 +151,8 @@
     "label": "Tedana: TE dependent analysis",
     "license": "MIT",
     "maintainer": "Amy Hegarty <amhe4260@colorado.edu>",
-    "name": "tedana",
+    "name": "fw-tedana",
     "source": "https://github.com/intermountainneuroimaging/fw-tedana",
     "url": "https://tedana.readthedocs.io/en/stable/index.html",
-    "version": "0.0.12_inc0.1"
+    "version": "0.0.12_inc0.2"
 }

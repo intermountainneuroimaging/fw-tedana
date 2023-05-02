@@ -81,20 +81,9 @@ def zip_htmls(output_dir, destination_id, path):
 
             for h_file in html_files:
                 log.info("Found %s", h_file)
-
-
-
-                # os.rename(h_file, "index.html")
-                name_no_html = Path(h_file).name[:-5]  # remove ".html" from end
-
-                dest_html = os.path.join(
-                    output_dir, name_no_html + "_" + destination_id + ".html"
-                )
-
-                flatten_image_refs(h_file, dest_html)  # outputs flattened file as "index.html"
-
-                # zip_it_zip_it_good(output_dir, destination_id, h_file, path)
-                # os.rename("index.html", h_file)
+                os.rename(h_file, "index.html")
+                zip_it_zip_it_good(output_dir, destination_id, h_file, path)
+                os.rename("index.html", h_file)
 
             # restore if necessary
             if save_name != "":
