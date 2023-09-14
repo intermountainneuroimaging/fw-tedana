@@ -107,7 +107,7 @@
         },
         "gear-builder": {
             "category": "analysis",
-            "image": "amhe4269/fw-tedana:23.0.1_inc0.4"
+            "image": "amhe4269/fw-tedana:23.0.1_inc0.4rc0"
         },
         "license": "Apache-2.0"
     },
@@ -154,5 +154,5 @@
     "name": "fw-tedana",
     "source": "https://github.com/intermountainneuroimaging/fw-tedana",
     "url": "https://tedana.readthedocs.io/en/stable/index.html",
-    "version": "23.0.1_inc0.4"
+    "version": "23.0.1_inc0.4rc0"
 }

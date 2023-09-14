@@ -164,16 +164,27 @@ def run_fmriprep_pipe(gear_options: dict, app_options: dict) -> int:
         )
 
         # if gear completed without error, move report to also contain acq prefix
+        # run_error = 0
         if run_error == 0:
-            files = searchfiles(os.path.join(arg_options["out-dir"], "tedana*"), dryrun=False)
+
+            report_path = op.join(output_analysis_id_dir, arg_options["prefix"]+"_report")
+            os.makedirs(report_path, exist_ok=True)
+
+            files = searchfiles(os.path.join(arg_options["out-dir"], "report*"), dryrun=False)
+            files.extend(searchfiles(os.path.join(arg_options["out-dir"], "tedana*"), dryrun=False))
+            files.extend(searchfiles(os.path.join(arg_options["out-dir"], "figures"), dryrun=False))
+            files = [i for i in files if i]  #remove empty elements
             for f in files:
                 f = Path(f)
                 if arg_options["prefix"] in f.name:
                     continue
-                os.rename(str(f), str(f).replace("tedana", arg_options["prefix"]))
+
+                shutil.move(str(f), op.join(f.parent, arg_options["prefix"]+"_report"))
+
+            os.rename(op.join(report_path,"tedana_report.html"), op.join(report_path,"tedana_report.html").replace("tedana", arg_options["prefix"]))
 
             # Make archives for result *.html files for easy display on platform
-            zip_htmls(gear_options["output-dir"], gear_options["destination-id"], output_analysis_id_dir)
+            zip_htmls(gear_options["output-dir"], gear_options["destination-id"], report_path)
 
     if not gear_options["dry-run"]:
         # zip outputs
@@ -182,7 +193,7 @@ def run_fmriprep_pipe(gear_options: dict, app_options: dict) -> int:
         execute_shell(cmd, dryrun=gear_options["dry-run"], cwd=gear_options["work-dir"])
 
         # Make archives for result *.html files for easy display on platform
-        zip_htmls(gear_options["output-dir"], gear_options["destination-id"], output_analysis_id_dir)
+        # zip_htmls(gear_options["output-dir"], gear_options["destination-id"], output_analysis_id_dir)
 
     return run_error
 
