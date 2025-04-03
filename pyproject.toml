@@ -24,10 +24,10 @@ errorhandler = "^2.0.1"
 nibabel = "^5.0.0"
 nipype = "^1.8.5"
 nilearn = "^0.10.0"
-mapca = "^0.0.3"
+mapca = "^0.0.4"
 duecredit = "^0.9.2"
 pandas = "^2.0"
-tedana = "^23.0.1"
+tedana = "^24.0.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.1.2"
