@@ -586,6 +586,14 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
+name = "latexcodec"
+version = "3.0.0"
+description = "A lexer and codec to work with LaTeX code in Python."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[[package]]
 name = "lazy-object-proxy"
 version = "1.9.0"
 description = "A fast and thorough lazy object proxy."
@@ -617,25 +625,24 @@ source = ["Cython (>=0.29.35)"]
 
 [[package]]
 name = "mapca"
-version = "0.0.3"
-description = "A Python implementation of the moving average principal components analysis methods from GIFT."
+version = "0.0.4"
+description = "Moving Average Principal Component Analysis for fMRI data"
 category = "main"
 optional = false
-python-versions = ">=3.5"
+python-versions = ">=3.8"
 
 [package.dependencies]
 nibabel = ">=2.5.1"
 nilearn = "*"
-numpy = ">=1.15"
-scikit-learn = ">=0.22"
+numpy = ">=1.16"
+scikit-learn = ">=1.2"
 scipy = ">=1.3.3"
 
 [package.extras]
-all = ["requests", "duecredit", "sphinx-argparse", "sphinx-rtd-theme", "pytest-cov", "versioneer", "pytest", "flake8 (>=3.7)", "codecov", "sphinx (>=1.5.3)", "coverage (<5.0)"]
-dev = ["versioneer"]
-doc = ["sphinx (>=1.5.3)", "sphinx-rtd-theme", "sphinx-argparse"]
-duecredit = ["duecredit"]
-tests = ["codecov", "coverage (<5.0)", "flake8 (>=3.7)", "pytest", "pytest-cov", "requests"]
+all = ["mapca"]
+dev = ["pre-commit"]
+doc = ["sphinx-argparse", "sphinx-copybutton", "sphinx-rtd-theme (>=1.2.2)", "sphinx (>=6.2.1)", "sphinxcontrib-bibtex"]
+tests = ["codecov", "coverage", "flake8-black", "flake8-isort", "flake8-pyproject", "flake8 (>=3.7)", "pytest", "pytest-cov (>=4.0.0)", "requests"]
 
 [[package]]
 name = "markupsafe"
@@ -755,29 +762,29 @@ zstd = ["pyzstd (>=0.14.3)"]
 
 [[package]]
 name = "nilearn"
-version = "0.10.1"
+version = "0.10.4"
 description = "Statistical learning for neuroimaging in Python"
 category = "main"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 
 [package.dependencies]
 joblib = ">=1.0.0"
 lxml = "*"
-nibabel = ">=3.2.0"
+nibabel = ">=4.0.0"
 numpy = ">=1.19.0"
 packaging = "*"
 pandas = ">=1.1.5"
 requests = ">=2.25.0"
 scikit-learn = ">=1.0.0"
-scipy = ">=1.6.0"
+scipy = ">=1.8.0"
 
 [package.extras]
-dev = ["nilearn"]
-doc = ["black", "coverage", "flake8", "flake8-docstrings", "furo", "memory-profiler", "mkl", "myst-parser", "nilearn", "numpydoc", "sphinx", "sphinx-copybutton", "sphinx-design", "sphinx-gallery", "sphinxcontrib-bibtex", "sphinxext-opengraph"]
-min = ["joblib (==1.0.0)", "nibabel (==3.2.0)", "numpy (==1.19.0)", "pandas (==1.1.5)", "scikit-learn (==1.0.0)", "scipy (==1.6.0)"]
-plotly = ["kaleido", "plotly"]
-plotting = ["matplotlib (>=3.3.0)"]
+dev = ["nilearn", "pre-commit", "tox"]
+doc = ["furo", "memory-profiler", "myst-parser", "nilearn", "numpydoc", "ruamel-yaml", "sphinx", "sphinx-copybutton", "sphinx-design", "sphinx-gallery", "sphinxcontrib-bibtex", "sphinxext-opengraph"]
+plotly = ["nilearn"]
+plotting = ["kaleido", "kaleido (==0.1.0.post1)", "matplotlib (>=3.3.0)", "plotly"]
+style = ["black", "blacken-docs", "codespell", "flake8", "flake8-docstrings", "flake8-functions", "flake8-use-fstring", "flynt", "isort", "tomli"]
 test = ["coverage", "pytest-cov", "pytest (>=6.0.0)"]
 
 [[package]]
@@ -1042,6 +1049,30 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
+name = "pybtex"
+version = "0.24.0"
+description = "A BibTeX-compatible bibliography processor in Python"
+category = "main"
+optional = false
+python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*"
+
+[package.dependencies]
+latexcodec = ">=1.0.4"
+PyYAML = ">=3.01"
+six = "*"
+
+[package.extras]
+test = ["pytest"]
+
+[[package]]
+name = "pybtex-apa-style"
+version = "1.3"
+description = "Pybtex APA-like style"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "pycodestyle"
 version = "2.11.0"
 description = "Python style guide checker"
@@ -1264,6 +1295,25 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "robustica"
+version = "0.1.4"
+description = "Fully cumstomizable robust Independent Components Analysis (ICA)"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.dependencies]
+joblib = "*"
+numpy = "*"
+pandas = "*"
+scikit-learn = "*"
+scipy = "*"
+tqdm = "*"
+
+[package.extras]
+extra = ["scikit-learn-extra"]
+
+[[package]]
 name = "scikit-learn"
 version = "1.3.0"
 description = "A set of python modules for machine learning and data mining"
@@ -1366,29 +1416,33 @@ tests = ["pytest", "typeguard", "pygments", "littleutils", "cython"]
 
 [[package]]
 name = "tedana"
-version = "23.0.1"
+version = "24.0.2"
 description = "TE-Dependent Analysis (tedana) of multi-echo functional magnetic resonance imaging (fMRI) data."
 category = "main"
 optional = false
 python-versions = ">=3.8"
 
 [package.dependencies]
-bokeh = "<2.3.0"
-jinja2 = "3.0.1"
-mapca = ">=0.0.3"
+bokeh = ">=1.0.0,<=3.5.2"
+mapca = ">=0.0.4,<=0.0.5"
 matplotlib = "*"
-nibabel = ">=2.5.1"
-nilearn = ">=0.7"
-numpy = ">=1.16"
-pandas = ">=2.0"
-scikit-learn = ">=0.21"
-scipy = ">=1.2.0"
+nibabel = ">=2.5.1,<=5.2.1"
+nilearn = ">=0.10.3,<=0.10.4"
+numpy = ">=1.16,<=2.1.1"
+pandas = ">=2.0,<=2.2.2"
+pybtex = "*"
+pybtex-apa-style = "*"
+robustica = "0.1.4"
+scikit-learn = ">=0.21,<=1.5.2"
+scipy = ">=1.2.0,<=1.14.1"
 threadpoolctl = "*"
+tqdm = "*"
 
 [package.extras]
-all = ["tedana"]
-doc = ["sphinx-argparse", "sphinx-copybutton", "sphinx-rtd-theme", "sphinx (>=1.5.3)", "sphinxcontrib-bibtex"]
-tests = ["codecov", "coverage", "flake8-black", "flake8-isort", "flake8-pyproject", "flake8 (>=3.7)", "pytest", "pytest-cov (>=4.0.0)", "requests"]
+all = ["codecov", "coverage", "flake8-absolute-import", "flake8-black", "flake8-docstrings", "flake8-isort", "flake8-pyproject", "flake8-unused-arguments", "flake8-use-fstring", "flake8 (>=3.7)", "pep8-naming", "pre-commit", "pytest", "pytest-cov (>=4.0.0)", "requests", "sphinx-argparse", "sphinx-copybutton", "sphinx-rtd-theme (>=1.2.2)", "sphinx (>=6.2.1)", "sphinxcontrib-bibtex"]
+dev = ["pre-commit"]
+doc = ["sphinx-argparse", "sphinx-copybutton", "sphinx-rtd-theme (>=1.2.2)", "sphinx (>=6.2.1)", "sphinxcontrib-bibtex"]
+tests = ["codecov", "coverage", "flake8-absolute-import", "flake8-black", "flake8-docstrings", "flake8-isort", "flake8-pyproject", "flake8-unused-arguments", "flake8-use-fstring", "flake8 (>=3.7)", "pep8-naming", "pytest", "pytest-cov (>=4.0.0)", "requests"]
 
 [[package]]
 name = "threadpoolctl"
@@ -1429,6 +1483,24 @@ description = "Tornado is a Python web framework and asynchronous networking lib
 category = "main"
 optional = false
 python-versions = ">= 3.8"
+
+[[package]]
+name = "tqdm"
+version = "4.67.1"
+description = "Fast, Extensible Progress Meter"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+colorama = {version = "*", markers = "platform_system == \"Windows\""}
+
+[package.extras]
+dev = ["pytest (>=6)", "pytest-cov", "pytest-timeout", "pytest-asyncio (>=0.24)", "nbval"]
+discord = ["requests"]
+slack = ["slack-sdk"]
+telegram = ["requests"]
+notebook = ["ipywidgets (>=6)"]
 
 [[package]]
 name = "traitlets"
@@ -1533,7 +1605,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-ena
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8.10"
-content-hash = "20032829c5a5519017fc17422418f987559975d3281e4c9351855e0db89b95c6"
+content-hash = "b2651834c2b15162520576411f9ad069d9b51b138c940674653099ae67901372"
 
 [metadata.files]
 appnope = []
@@ -1581,6 +1653,7 @@ jinja2 = []
 joblib = []
 jsonschema = []
 kiwisolver = []
+latexcodec = []
 lazy-object-proxy = []
 looseversion = []
 lxml = []
@@ -1613,6 +1686,8 @@ psutil = []
 ptyprocess = []
 pure-eval = []
 py = []
+pybtex = []
+pybtex-apa-style = []
 pycodestyle = []
 pydocstyle = []
 pydot = []
@@ -1630,6 +1705,7 @@ rdflib = []
 requests = []
 requests-toolbelt = []
 rfc3987 = []
+robustica = []
 scikit-learn = []
 scipy = []
 setuptools-scm = []
@@ -1644,6 +1720,7 @@ toml = []
 tomli = []
 tomlkit = []
 tornado = []
+tqdm = []
 traitlets = []
 traits = []
 typing-extensions = []
